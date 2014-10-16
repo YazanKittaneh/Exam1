@@ -19,6 +19,7 @@ public class MathUtils
     long temp = 0;
     long avrg = 0;
     int i;
+    int count =0;
     
     if (vals.length == 0)
       {
@@ -28,6 +29,14 @@ public class MathUtils
       {
         for (i = 0; i < vals.length; i++)
           {
+            System.out.println(vals[i]);
+            if((vals[i] % vals.length) >= .5 && count%2 == 0)
+              {
+                System.out.println("true " + i);
+                avrg++;
+                count++;
+              }
+            System.out.println("increment " + i);
             temp = (vals[i] / (long) vals.length); 
               avrg += temp;//otherwise, get average
           } // for

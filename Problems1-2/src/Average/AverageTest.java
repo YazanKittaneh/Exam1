@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * A test of the average method.
@@ -90,8 +91,8 @@ public class AverageTest
   /**
    * Tests an array of size 1 with element i where -10<=i<=10
    * 
-   * @throws Exception if checkAverage fails and reports what part of
-   * 			the loop failed the test
+   * @throws Exception if checkAverage fails and reports 
+   *               what part of the loop failed the test
    */
   @Test
   public void test1Num()
@@ -113,7 +114,8 @@ public class AverageTest
   } // test1
 
   /**
-   * Tests an array of size 1 with element MAX_VALUE of long
+   * Tests an array of size 1 with element 
+   * MAX_VALUE of long
    */
   public void test1MAX()
   {
@@ -129,7 +131,8 @@ public class AverageTest
   }
 
   /**
-   * Tests an array of size 1 with element MIN_VALUE of long
+   * Tests an array of size 1 with element 
+   * MIN_VALUE of long
    */
   public void test1MIN()
   {
@@ -189,9 +192,11 @@ public class AverageTest
   } // test2
 
   /**
-   * Tests an array of size 2, with elements MAX_VALUE and MAX_VALUE of long
+   * Tests an array of size 2, with elements MAX_VALUE
+   *  and MAX_VALUE of long
    */
   public void test2MAX()
+
   {
     long i = Long.MAX_VALUE;
     try
@@ -203,14 +208,68 @@ public class AverageTest
         pen.println("test1MAX Error on run");
       }
   }
+  
+  /**
+   * Tests an array of size 2, with elements MIN_VALUE 
+   * and MIN_VALUE of long
+   */
+  public void test2MIN()
 
+  {
+    long i = Long.MIN_VALUE;
+    try
+      {
+        checkAverage(i, new long[] { i, i });
+      } // try
+    catch (Exception e)
+      {
+        pen.println("test1MIN Error on run");
+      }
+  }
+
+ /**
+ * Tests an array of size 6 of random elements x  where -10<=x<=10
+ */
+  public void test3()
+  {
+    int i=0;
+    Random r = new Random(10);
+    long[] ranArray = null;
+    
+    while (i!=6)
+      {
+        ranArray[i] = r.nextLong();
+        i++;
+      }
+    
+    try
+    {
+      checkAverage(i, new long[] { i, i });
+    } // try
+  catch (Exception e)
+    {
+      pen.println("test1MIN Error on run");
+    }
+    
+  }
+  
+  /**
+   * Main method
+   * @param args
+   * @throws Exception
+   */
   public void main(String[] args)
     throws Exception
   {
     test0();
     test1Empty();
     test1Num();
-
+    test1MAX();
+    test1MIN();
+    test2Empty();
+    //test2Num();
+    test2MAX();
+    test2MIN();
   }
 
 } // class AverageTest

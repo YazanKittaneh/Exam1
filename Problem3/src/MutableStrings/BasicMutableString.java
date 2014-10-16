@@ -9,18 +9,18 @@ package MutableStrings;
  * @author Your Name Here
  */
 public class BasicMutableString
-  implements MutableString
+    implements MutableString
 {
   // +-------+-------------------------------------------------------------
   // | Notes |
   // +-------+
 
-/*
-  We store strings in arrays of characters.  When we need to expand
-  the array, we double the size of the array.  That suggests we never
-  use more than twice as much is necessary (well, except when we then
-  delete characters), but keeps running time relatively good.
- */
+  /*
+    We store strings in arrays of characters.  When we need to expand
+    the array, we double the size of the array.  That suggests we never
+    use more than twice as much is necessary (well, except when we then
+    delete characters), but keeps running time relatively good.
+   */
 
   // +-----------+---------------------------------------------------------
   // | Constants |
@@ -89,7 +89,7 @@ public class BasicMutableString
       {
         capacity *= 2;
       } // while
-    
+
     // And we're done
     return capacity;
   } // computeNeededCapacity(int)
@@ -103,8 +103,8 @@ public class BasicMutableString
    */
   public boolean equals(Object other)
   {
-    return (other instanceof BasicMutableString) && 
-        equals((BasicMutableString) other);
+    return (other instanceof BasicMutableString)
+           && equals((BasicMutableString) other);
   } // equals(Object)
 
   /**
@@ -211,13 +211,13 @@ public class BasicMutableString
     // make a space in the array.
     else
       {
-        for (int j = this.size-1; j >= i; j--)
+        for (int j = this.size - 1; j >= i; j--)
           this.contents[j + len] = this.contents[j];
       } // else
 
     // There's space.  Put things in
     for (int j = 0; j < len; j++)
-      this.contents[i+j] = str.charAt(j);
+      this.contents[i + j] = str.charAt(j);
 
     // And that's it
     this.size = newsize;
@@ -240,6 +240,73 @@ public class BasicMutableString
    */
   public void replace(String pattern, String replacement)
   {
-    
+    int lowerBound = 0;
+    int upperBound = this.length();
+    int current = 0;
+    int diff = (pattern.length()-replacement.length());
+    int i = 0;
+    boolean fails = false;
+
+    /*
+     * I want this code to go through the string, 
+     * once it finds the matching first character,
+     * its going to keep going until pattern.length.
+     * Then it sets the current to that position
+     * and the replaces whatever is there. 
+     * 
+     * 
+     * thing is, i need it to reset afterwards current will now be at a new place 
+     */
+    while (current < upperBound)
+      {
+        while (!fails)
+          {
+            if (this.charAt(current) == replacement.charAt(i))
+              {
+                fails = false;
+                current++;
+                i++;
+              }
+          }
+        if (i == pattern.length()) //if it found all of the pattern then it should be replaced
+          {
+            if (pattern.length() < replacement.length())
+              {
+                for(i = current - replacement.length(); i<=upperBound; i++)
+                  {
+                    this.contents[i] = replacement.charAt(i+1);
+                  }
+                for (i=lowerBound;i<=current; i++)
+                  {
+                    this.contents[i]=replacement.charAt(i);
+                  }
+              }//if
+            else if (pattern.length() == replacement.length())
+              {
+                for (i=lowerBound; i < current; i++)
+                  {
+                    this.contents[lowerBound] = replacement.charAt(lowerBound);
+                  } //else if
+              }
+            else if (pattern.length() > replacement.length())
+              {
+                upperBound =
+                    computeNeededCapacity(pattern.length()
+                                          + replacement.length());
+                for (i=upperBound; i>=current; i--)
+                  {
+                    this.contents[i] = this.contents[i - diff];
+                  }
+                for (i=lowerBound; i <= current; i++)
+                  {
+                    this.contents[lowerBound] = replacement.charAt(lowerBound);
+                  } //else if
+              } // else if
+          } //if 
+        //reset variables
+        i = 0;
+        lowerBound = current;
+      }
+
   } // replace(String, String)
 } // class BasicMutableString

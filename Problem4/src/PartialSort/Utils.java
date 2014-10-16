@@ -1,3 +1,4 @@
+package PartialSort;
 import java.util.Comparator;
 
 /**
@@ -26,7 +27,29 @@ public class Utils
   public static <T> int[] pseudoSort(T val, T[] values,
        Comparator<? super T> order)
   {
-    // STUB
+    int lessthanBound;
+    int greaterthanBound;
+    int equalsBound;
+    int lowerBound;
+    int upperBound;
+    T temp; 
+    int i;
+    
+    for (i=0; i<=values.length; i++)
+      {
+        if(//val is greater than)
+            {
+              temp = values[lowerBound];
+              lowerBound++
+            }
+            else if (val is less than)
+              {
+                
+              }
+              
+            
+      }
+    
     return new int[] { values.length, values.length };
   } // pseudoSort
 } // class Utils

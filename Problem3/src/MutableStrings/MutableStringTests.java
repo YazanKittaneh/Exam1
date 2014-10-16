@@ -227,6 +227,5 @@ public class MutableStringTests
         testReplace("aaaaaabbbbbbb");
         testReplace("alphabetalphabetalphabet");
       } // for
-  } // testReplace
-
+  } // testReplace-
 } // class MutableStringTests
