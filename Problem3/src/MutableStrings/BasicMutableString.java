@@ -238,15 +238,17 @@ public class BasicMutableString
   /**
    * Replace all copies of pattern with replacement.
    */
+  @SuppressWarnings("unused")
   public void replace(String pattern, String replacement)
   {
     int lowerBound = 0;
     int upperBound = this.length();
     int current = 0;
-    int diff = (pattern.length()-replacement.length());
-    int i = 0;
+    int diff = Math.abs(pattern.length() - replacement.length());
+    int i = 0, j = 0;
+    int limit = 16;
+    int strLength = this.length();
     boolean fails = false;
-
     /*
      * I want this code to go through the string, 
      * once it finds the matching first character,
@@ -257,56 +259,83 @@ public class BasicMutableString
      * 
      * thing is, i need it to reset afterwards current will now be at a new place 
      */
-    while (current < upperBound)
+    iterator: while (current < upperBound)
       {
-        while (!fails)
+        //System.out.println("within while1");
+        checker: while (fails == false)
           {
-            if (this.charAt(current) == replacement.charAt(i))
+            if (i == pattern.length())
               {
-                fails = false;
+                //System.out.println("within if");
+                if (pattern.length() < replacement.length()) //the replacement is smaller than original
+                  {
+                    if ((this.length() + diff) > limit)
+                      {
+                        this.size =
+                            computeNeededCapacity(pattern.length()
+                                                  + replacement.length());
+                        for (i = current; i <= upperBound; i++) //move everything down by diff
+                          {
+                            this.contents[i + diff] = this.contents[i];
+                          }
+                        for (i = current - diff; i < current; i++) // put the replacement in
+                          {
+                            this.contents[i] = replacement.charAt(j);
+                            j++;
+                          }
+                      }
+                    //set variables
+                    j = 0;
+                    current = current + diff;
+                    upperBound = upperBound + diff;
+                  }//if
+                else
+                  {
+                    if (pattern.length() == replacement.length()) // replacement equal to pattern
+                      {
+                        //System.out.println("replacement equal to pattern");
+                        for (i = current - diff; i < current; i++)
+                          {
+                            this.contents[i] = replacement.charAt(j);
+                            j++;
+                          }
+                        j = 0;
+                      }//else if
+                    else
+                      {
+                        if (pattern.length() > replacement.length()) //replacement greater than pattern
+                          {
+                            for (i = limit; i >= current; i--)
+                              {
+                                this.contents[i - diff] = this.contents[i];
+                              }
+                            for (i = lowerBound; i < current; i++)
+                              {
+                                this.contents[i] = replacement.charAt(i);
+                              } //else if
+                          } // else if
+                      }
+                  }
+              }
+            else
+              {
+                System.out.println("current " + current + " its on: "
+                                   + this.contents[current]);
+                System.out.println("full string: " + this.toString());
+                if (this.charAt(current) == pattern.charAt(i))
+                  {
+                    fails = false;
+                    i++;
+                  }
+                else
+                  fails = true;
                 current++;
-                i++;
               }
           }
-        if (i == pattern.length()) //if it found all of the pattern then it should be replaced
-          {
-            if (pattern.length() < replacement.length())
-              {
-                for(i = current - replacement.length(); i<=upperBound; i++)
-                  {
-                    this.contents[i] = replacement.charAt(i+1);
-                  }
-                for (i=lowerBound;i<=current; i++)
-                  {
-                    this.contents[i]=replacement.charAt(i);
-                  }
-              }//if
-            else if (pattern.length() == replacement.length())
-              {
-                for (i=lowerBound; i < current; i++)
-                  {
-                    this.contents[lowerBound] = replacement.charAt(lowerBound);
-                  } //else if
-              }
-            else if (pattern.length() > replacement.length())
-              {
-                upperBound =
-                    computeNeededCapacity(pattern.length()
-                                          + replacement.length());
-                for (i=upperBound; i>=current; i--)
-                  {
-                    this.contents[i] = this.contents[i - diff];
-                  }
-                for (i=lowerBound; i <= current; i++)
-                  {
-                    this.contents[lowerBound] = replacement.charAt(lowerBound);
-                  } //else if
-              } // else if
-          } //if 
         //reset variables
+        fails = false;
         i = 0;
-        lowerBound = current;
-      }
 
-  } // replace(String, String)
-} // class BasicMutableString
+      } // replace(String, String)
+  } // class BasicMutableString
+}

@@ -1,3 +1,4 @@
+package PredicateMaker;
 import java.util.function.Predicate;
 
 /**
@@ -17,7 +18,13 @@ public class PredicateMakerAlt<T>
    */
   public Predicate<T> and(Predicate<T>[] preds)
   {
-    // STUB
-    return null;
+    int i;
+    for (i =0; i<preds.length; i++)
+      {
+        Predicate<T> newPred = new Predicate<T> (preds[i]);
+      }
+
+    
+    return ;
   } // and(Predicate<T>[])
 } // class PredicateMakerAlt<T>

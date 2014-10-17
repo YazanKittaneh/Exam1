@@ -225,33 +225,66 @@ public class AverageTest
       {
         pen.println("test1MIN Error on run");
       }
-  }
+  } //test2MIN()
 
  /**
- * Tests an array of size 6 of random elements x  where -10<=x<=10
+ * Tests arrays size 3-10000 made of element MAX_VALUE
  */
-  public void test3()
+  public void test3ArrMAX()
   {
-    int i=0;
-    Random r = new Random(10);
-    long[] ranArray = null;
+    int size=0;
+    long max= Long.MAX_VALUE;
+    Random generator = new Random();
     
-    while (i!=6)
+    for (size = 3; size < 10000; size = size + generator.nextInt(100))
       {
-        ranArray[i] = r.nextLong();
-        i++;
-      }
-    
-    try
+        long[] arr = new long[size];
+        for (int i = 0; i < size; i++)
+          {
+            arr[i] = max;
+          } // inner for
+        checkAverage(max, arr);
+      }// outer for
+  } //test3ArrMAX
+  
+  /**
+   * Tests arrays size 3-10000 made of element Min_VALUE
+   */
+    public void test3ArrMIN()
     {
-      checkAverage(i, new long[] { i, i });
-    } // try
-  catch (Exception e)
+      int size=0;
+      long min= Long.MIN_VALUE;
+      Random generator = new Random();
+      
+      for (size = 3; size < 10000; size = size + generator.nextInt(100))
+        {
+          long[] arr = new long[size];
+          for (int i = 0; i < size; i++)
+            {
+              arr[i] = min;
+            } // inner for
+          checkAverage(min, arr);
+        }// outer for
+      
+    } //test3ArrMIN
+  /**
+   * Tests arrays size 3-10000 made of element 1
+   */
+    public void test3Arr()
     {
-      pen.println("test1MIN Error on run");
-    }
-    
-  }
+      int size=0;
+      Random generator = new Random();
+      
+      for (size = 3; size < 10000; size = size + generator.nextInt(100))
+        {
+          long[] arr = new long[size];
+          for (int i = 0; i < size; i++)
+            {
+              arr[i] = 1;
+            } // inner for
+          checkAverage(1, arr);
+        }// outer for
+    } //test3Arr
   
   /**
    * Main method
@@ -270,6 +303,7 @@ public class AverageTest
     //test2Num();
     test2MAX();
     test2MIN();
+    test3Arr();
   }
 
 } // class AverageTest

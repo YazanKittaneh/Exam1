@@ -1,3 +1,4 @@
+package PredicateMaker;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -105,7 +106,7 @@ public class PredicateTests
   @SuppressWarnings({ "unchecked" })
   public static void testAndOfIntegerPredicates(PredicateMaker<Integer> pm)
   {
-    Integer[] vals = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+    Integer[] vals = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }; 
     Integer[] more =
         { 0, null, 2, null, null, 5, 6, null, null, 9, 10, 11, null };
 

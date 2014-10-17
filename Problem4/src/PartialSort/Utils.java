@@ -40,11 +40,16 @@ public class Utils
         if(//val is greater than)
             {
               temp = values[lowerBound];
-              lowerBound++
+              lowerBound++;
             }
-            else if (val is less than)
+            else if (values[i]<val)
               {
-                
+                temp = values[greaterthanBound];
+                values[greaterthanBound] = values[i];
+              }
+            else //then it must be equal
+              {
+                equalsBound == greaterthanBound = i; //leave it where it is, just
               }
               
             

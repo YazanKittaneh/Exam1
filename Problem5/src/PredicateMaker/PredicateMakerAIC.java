@@ -1,3 +1,4 @@
+package PredicateMaker;
 import java.util.function.Predicate;
 
 /**
